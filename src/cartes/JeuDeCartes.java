@@ -30,10 +30,6 @@ public class JeuDeCartes {
             new Configuration(new Botte(Type.ACCIDENT), 1)
     };
 	
-	public JeuDeCartes() {
-		
-	}
-	
 	public Carte[] donnerCartes() {
 		int taille = 0;
 		for (Configuration typeDeCarte : typesDeCartes) {
@@ -54,11 +50,6 @@ public class JeuDeCartes {
 	}
 	
 	
-	
-	
-	
-	
-	
 	public String affichageJeuDeCartes() {
 		StringBuilder chaine = new StringBuilder();
 		for (Configuration typeDeCarte : typesDeCartes) {
@@ -70,7 +61,30 @@ public class JeuDeCartes {
 		return chaine.toString();
 	}
 	
-	private class Configuration {
+	public boolean checkCount() {
+        Carte[] cartes = donnerCartes();
+        
+        for (Configuration configuration : typesDeCartes) {
+            if (!checkConfiguration(configuration, cartes)){
+                return false;
+            }
+        }
+    
+        return true;
+    }
+    
+    private boolean checkConfiguration(Configuration configuration, Carte[] cartes) {
+        int nbTrouvees = 0;
+        
+        for (int i = 0; i < cartes.length; i++) {
+            if (cartes[i].equals(configuration.getCarte())) {
+                nbTrouvees++;
+            }
+        }
+        return nbTrouvees == configuration.getNbExemplaires();
+    }
+	
+	private static class Configuration {
 		private int nbExemplaires;
 		private Carte carte;
 		

@@ -41,10 +41,10 @@ public class Sabot implements Iterable<Carte> {
 			carte = iterateur.next();
 		}
 		iterateur.remove();
-		nbCartes--;
 		return carte;	
 	}
 	
+
 	public Iterator<Carte> iterator() {
 		return new Iterateur();
 	}

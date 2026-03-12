@@ -13,10 +13,10 @@ public class TestSabot {
 
 	// 4.2.a
 	public void questionA() {
-//		while (!sabot.estVide()) {
-//			Carte carte = sabot.piocher();
-//			System.out.println("Je pioche " + carte);
-//		}
+		while (!sabot.estVide()) {
+			Carte carte = sabot.piocher();
+			System.out.println("Je pioche " + carte);
+		}
 //		Console :
 //		Je pioche Accident
 //		Je pioche Accident
@@ -29,10 +29,10 @@ public class TestSabot {
 
 	// 4.2.b
 	public void questionB() {
-//		for (Iterator<Carte> iterator = sabot.iterator(); iterator.hasNext();) {
-//			System.out.println("Je pioche " + iterator.next());
-//			iterator.remove();
-//		}
+		for (Iterator<Carte> iterator = sabot.iterator(); iterator.hasNext();) {
+			System.out.println("Je pioche " + iterator.next());
+			iterator.remove();
+		}
 	}
 
 	// 4.2.c
@@ -53,8 +53,8 @@ public class TestSabot {
 	public static void main(String[] args) {
 		TestSabot testPioche = new TestSabot();
 		testPioche.questionA();
-		testPioche.questionB();
-		testPioche.questionC();
+		//testPioche.questionB();
+		//testPioche.questionC();
 	}
 
 }
