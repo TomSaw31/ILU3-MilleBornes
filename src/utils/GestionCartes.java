@@ -7,6 +7,8 @@ import java.util.ListIterator;
 import java.util.Random;
 
 public class GestionCartes {
+	 private GestionCartes() {}
+
 	private static Random random = new Random();
 	
 //	public static <T> T extraire(List<T> liste) {
@@ -16,15 +18,10 @@ public class GestionCartes {
 	
 	public static <T> T extraire(List<T> liste) {
 		int index = random.nextInt(liste.size());
-
-		ListIterator<T> it = liste.listIterator();
+		ListIterator<T> iter = liste.listIterator(index);
 		
-		T element = null;
-		for (int i = 0; i <= index; i++) {
-			element = it.next();
-		}
-		
-		it.remove();
+		T element = iter.next();
+		iter.remove();
 		return element;
 	}
 	
@@ -73,36 +70,29 @@ public class GestionCartes {
 		return listeRassemblee;	
 	}
 	
+	
 	public static <T> boolean verifierRassemblement(List<T> liste) {
 		if (liste.isEmpty()) {
 			return true;
 		}
-		ListIterator<T> iterator = liste.listIterator();
-		T carteRef = iterator.next();
-		while (iterator.hasNext()) {
-			T carte = iterator.next();
-			
-			if (!carteRef.equals(carte) && autreElemDansListe(liste, carteRef, iterator.nextIndex())) {
+		
+		T carteRef = liste.get(0);
+		for(ListIterator<T> iter = liste.listIterator(); iter.hasNext();) {
+			T carte = iter.next();
+			if (!carteRef.equals(carte) && autreElemDansListe(liste, carteRef, iter.nextIndex())) {
 				return false;
 			}
-			
 			carteRef = carte;
 		}
-		
 		return true;
 	}
 	
 	private static <T> boolean autreElemDansListe(List<T> liste, T carteRef, int indexDebut) {
-		ListIterator<T> iterator = liste.listIterator();
 		if (indexDebut >= liste.size()) {
 			return false;
 		}
 		
-		while (iterator.nextIndex() < indexDebut) {
-			iterator.next();
-		}
-		
-		while (iterator.hasNext()) {
+		for(ListIterator<T> iterator = liste.listIterator(indexDebut); iterator.hasNext();) {
 			T carte = iterator.next();
 			if (carte.equals(carteRef)) {
 				return true;
@@ -110,4 +100,6 @@ public class GestionCartes {
 		}
 		return false;
 	}
+	
+	
 }
