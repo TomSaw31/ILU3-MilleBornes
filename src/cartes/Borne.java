@@ -16,4 +16,8 @@ public class Borne extends Carte {
 	public boolean equals(Object obj) {
 		return super.equals(obj) && ((Borne)obj).km == km;
 	}
+	
+	public int getKm() {
+		return km;
+	}
 }

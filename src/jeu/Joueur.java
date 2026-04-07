@@ -5,9 +5,11 @@ import cartes.Carte;
 public class Joueur {
 	private String nom;
 	private MainJoueur main;
+	private ZoneDeJeu zoneDeJeu;
 
-	public Joueur(String nom) {
+	public Joueur(String nom, ZoneDeJeu zoneDeJeu) {
 		this.nom = nom;
+		this.zoneDeJeu = zoneDeJeu;
 	}
 	
 	@Override
@@ -40,5 +42,13 @@ public class Joueur {
 		Carte carte = sabot.piocher();
 		donner(carte);
 		return carte;
+	}
+	
+	public int donnerKmParcourus() {
+		return zoneDeJeu.donnerKmParcourus();
+	}
+	
+	public void deposer(Carte c) {
+		zoneDeJeu.deposer(c);
 	}
 }
