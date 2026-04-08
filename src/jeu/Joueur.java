@@ -20,8 +20,6 @@ public class Joueur {
 		return false;
 	}
 	
-	
-	
 	public String getNom() {
 		return nom;
 	}
@@ -50,5 +48,9 @@ public class Joueur {
 	
 	public void deposer(Carte c) {
 		zoneDeJeu.deposer(c);
+	}
+	
+	public boolean estDepotAutorise(Carte c) {
+		return zoneDeJeu.estDepotAutorise(c);
 	}
 }

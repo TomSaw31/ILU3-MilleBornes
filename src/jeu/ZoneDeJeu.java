@@ -58,16 +58,13 @@ public class ZoneDeJeu {
 	private boolean estDepotFeuVertAutorise() {
 		if (pileBatailles.isEmpty()) {
 			return true;
-		} else {
-			Bataille sommet = pileBatailles.getLast();
-			if (sommet instanceof Attaque attaque) {
-				return attaque.equals(Cartes.FEU_ROUGE);
-			}
-			if (sommet instanceof Parade parade) {
-				return !parade.equals(Cartes.FEU_VERT);
-			}
-			return false;
 		}
+		
+		Bataille sommet = pileBatailles.getLast();
+		if (sommet instanceof Parade parade) {
+			return !parade.equals(Cartes.FEU_VERT);
+		}
+		return sommet.equals(Cartes.FEU_ROUGE);
 	}
 	
 	private boolean estDepotBorneAutorise(Borne borne) {
@@ -78,7 +75,7 @@ public class ZoneDeJeu {
 	}
 	
 	private boolean estDepotLimiteAutorise(Limite limite) {
-		if (limite instanceof DebutLimite debutLimite) {
+		if (limite instanceof DebutLimite) {
 			return pileLimites.isEmpty() || pileLimites.getLast() instanceof FinLimite;
 		} else {
 			return !pileLimites.isEmpty() && pileLimites.getLast() instanceof DebutLimite;
@@ -91,11 +88,7 @@ public class ZoneDeJeu {
 		}
 		if (bataille instanceof Parade parade) {
 			if (parade.equals(Cartes.FEU_VERT)) {
-				boolean res = pileBatailles.isEmpty();
-				Carte sommet = pileBatailles.getLast();
-				res |= sommet.equals(Cartes.FEU_ROUGE);
-				res |= sommet instanceof Parade sommetParade && !sommetParade.equals(Cartes.FEU_VERT);
-				return res;
+				return estDepotFeuVertAutorise();
 			}
 			return !pileBatailles.isEmpty() && pileBatailles.getLast().getType().equals(bataille.getType());
 		}
