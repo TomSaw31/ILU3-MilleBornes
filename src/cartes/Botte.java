@@ -10,4 +10,14 @@ public class Botte extends Probleme {
 	public String toString() {
 		return getType().getAffichageBotte();
 	}
+	
+	@Override
+	public int hashCode() {
+		return 31 * super.getType().hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
 }
