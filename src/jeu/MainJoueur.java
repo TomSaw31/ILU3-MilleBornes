@@ -7,12 +7,16 @@ import java.util.List;
 import cartes.Carte;
 
 public class MainJoueur {
-	List<Carte> listeCartes = new ArrayList<>();
+	private List<Carte> listeCartes = new ArrayList<>();
 	
 	public void prendre(Carte carte) {
 		listeCartes.add(carte);
 	}
 
+	public List<Carte> getCartes() {
+		return listeCartes;
+	}
+	
 	public void jouer(Carte carte) {
 		assert listeCartes.contains(carte);
 		listeCartes.remove(carte);
