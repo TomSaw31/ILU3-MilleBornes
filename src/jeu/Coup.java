@@ -54,4 +54,13 @@ public class Coup {
 		return 31 * (joueurCourant.hashCode() + carte.hashCode() + hashCible);
 		
 	}
+	
+	@Override
+	public String toString() {
+		if (joueurCible == null) {
+			return "defausse la carte " + carte.toString();
+		}
+		return "depose la carte " + carte.toString() + " dans la zone de jeu de " + joueurCible.getNom();
+
+	}
 }

@@ -3,10 +3,11 @@ package jeu;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import cartes.Carte;
 
-public class MainJoueur {
+public class MainJoueur implements Iterable<Carte>{
 	private List<Carte> listeCartes = new ArrayList<>();
 	
 	public void prendre(Carte carte) {
@@ -31,5 +32,28 @@ public class MainJoueur {
 		}
 		return chaine.toString();
 	}
+	
+	@Override
+	public Iterator<Carte> iterator() {
+		return new Iterateur();
+	}
+	
 
+	private class Iterateur implements Iterator<Carte> {
+		private int indiceIterateur = 0;
+		
+		@Override
+		public boolean hasNext() {
+			return indiceIterateur < listeCartes.size();
+		}
+
+		@Override
+		public Carte next() {
+			if (hasNext()) {
+				return listeCartes.get(indiceIterateur++);
+			} else {
+				throw new NoSuchElementException();
+			}
+		}
+	}
 }

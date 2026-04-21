@@ -140,4 +140,12 @@ public class ZoneDeJeu {
 	public boolean estPrioritaire() {
 		return bottes.contains(Cartes.PRIORITAIRE);
 	}
+	
+	public Set<Botte> getBottes() {
+		return bottes;
+	}
+	
+	public List<Bataille> getPileBataille() {
+		return batailles;
+	}
 }
