@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import cartes.Carte;
 import cartes.JeuDeCartes;
@@ -74,18 +73,22 @@ public class Jeu {
 		return chaine.toString();
 	}
 	
+
 	public String lancer() {
 		StringBuilder chaine = new StringBuilder("Debut : \n\n");
 		
 		while (!sabot.estVide()) {
 			Joueur joueurCourant = donnerJoueurSuivant();
-			System.out.println(joueurCourant.afficherEtatJoueur());
 			chaine.append(jouerTour(joueurCourant));
 			
 			int km = joueurCourant.donnerKmParcourus();
 			if (km >= 1000) {
-				chaine.append(joueurCourant.getNom()).append(" a parcouru ").append(Integer.toString(km));
-				chaine.append(" km. Il remporte la partie.\n");
+				chaine.append(joueurCourant.getNom());
+				chaine.append(" a parcouru ");
+				chaine.append(Integer.toString(km));
+				chaine.append(" km.\n");
+				chaine.append(joueurCourant.toString());
+				chaine.append(" remporte la partie.\n");
 				return chaine.toString();
 			}
 		}

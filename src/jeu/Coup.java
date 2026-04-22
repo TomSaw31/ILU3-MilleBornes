@@ -2,6 +2,7 @@ package jeu;
 
 import cartes.Attaque;
 import cartes.Carte;
+import cartes.DebutLimite;
 import cartes.Limite;
 
 public class Coup {
@@ -28,11 +29,17 @@ public class Coup {
 	}
 	
 	public boolean estValide() {
-		if (joueurCible != null && joueurCible.equals(joueurCourant)) {
-			return carte instanceof Attaque || carte instanceof Limite;
+		if (!joueurCible.getZoneDeJeu().estDepotAutorise(carte)) {
+			return false;
 		}
+		
+		if (carte instanceof Attaque || carte instanceof DebutLimite) {
+			return !joueurCourant.equals(joueurCible);
+		}
+		
 		return joueurCourant.equals(joueurCible);
 	}
+	
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -60,7 +67,10 @@ public class Coup {
 		if (joueurCible == null) {
 			return "defausse la carte " + carte.toString();
 		}
-		return "depose la carte " + carte.toString() + " dans la zone de jeu de " + joueurCible.getNom();
+		if (joueurCible.equals(joueurCourant)) {
+			return "depose la carte " + carte.toString() + " dans sa zone de jeu.";
+		}
+		return "depose la carte " + carte.toString() + " dans la zone de jeu de " + joueurCible.getNom() + ".";
 
 	}
 }

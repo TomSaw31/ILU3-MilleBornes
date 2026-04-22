@@ -46,6 +46,10 @@ public class Joueur {
 		return main;
 	}
 	
+	public ZoneDeJeu getZoneDeJeu() {
+		return zoneDeJeu;
+	}
+	
 	public void donner(Carte carte) {
 		main.prendre(carte);
 	}
