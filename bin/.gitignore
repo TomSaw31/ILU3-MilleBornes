@@ -1,2 +1,8 @@
+/module-info.class
+/.classpath
+/.gitignore
+/.project
+/cartes/
 /jeu/
 /testsFonctionnels/
+/utils/

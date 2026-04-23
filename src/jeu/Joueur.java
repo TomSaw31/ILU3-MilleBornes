@@ -10,20 +10,19 @@ import cartes.Carte;
 
 public class Joueur {
 	private String nom;
-	private MainJoueur main;
+	private MainJoueur main = new MainJoueur();
 	private ZoneDeJeu zoneDeJeu;
 	private Random random = new Random(0);
 
 	public Joueur(String nom, ZoneDeJeu zoneDeJeu) {
 		this.nom = nom;
 		this.zoneDeJeu = zoneDeJeu;
-		this.main = new MainJoueur();
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Joueur joueur) {
-			return joueur.getNom().equals(nom);
+			return joueur.getNom() != null && joueur.getNom().equals(nom);
 		}
 		return false;
 	}
@@ -67,12 +66,12 @@ public class Joueur {
 		return zoneDeJeu.donnerKmParcourus();
 	}
 	
-	public void deposer(Carte c) {
-		zoneDeJeu.deposer(c);
+	public void deposer(Carte carte) {
+		zoneDeJeu.deposer(carte);
 	}
 	
-	public boolean estDepotAutorise(Carte c) {
-		return zoneDeJeu.estDepotAutorise(c);
+	public boolean estDepotAutorise(Carte carte) {
+		return zoneDeJeu.estDepotAutorise(carte);
 	}
 	
 	public Set<Coup> coupsPossibles(Set<Joueur> participants) {
@@ -121,15 +120,18 @@ public class Joueur {
 		for (Botte botte : zoneDeJeu.getBottes()) {
 			chaine.append(botte.toString()).append(" ");
 		}
-		
 		chaine.append("\nLimitation de vitesse : " + (zoneDeJeu.donnerLimitationVitesse() != 200));
 		if (zoneDeJeu.getPileBataille().isEmpty()) {
 			chaine.append("\nSommet de la pile de bataille : null");
-		}
-		else {
+		} else {
 			chaine.append("\nSommet de la pile de bataille : " + zoneDeJeu.getPileBataille().getFirst());
 		}
-		
+		chaine.append(afficherContenuMain());
+		return chaine.toString();
+	}
+	
+	private String afficherContenuMain() {
+		StringBuilder chaine = new StringBuilder();
 		chaine.append("\nContenu de la main : ");
 		for (Iterator<Carte> iter = main.iterator(); iter.hasNext();) {
 			Carte carte = iter.next();
@@ -139,7 +141,6 @@ public class Joueur {
 			}
 		}
 		chaine.append("\n");
-		
 		return chaine.toString();
 	}
 }

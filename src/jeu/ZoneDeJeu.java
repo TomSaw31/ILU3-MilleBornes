@@ -124,17 +124,17 @@ public class ZoneDeJeu {
 		return false;
 	}
 	
-	public boolean estDepotAutorise(Carte c) {
-		if (c instanceof Borne borne) {
+	public boolean estDepotAutorise(Carte carte) {
+		if (carte instanceof Borne borne) {
 			return estDepotBorneAutorise(borne);
 		}
-		if (c instanceof Limite limite) {
+		if (carte instanceof Limite limite) {
 			return estDepotLimiteAutorise(limite);
 		}
-		if (c instanceof Bataille bataille) {
+		if (carte instanceof Bataille bataille) {
 			return estDepotBatailleAutorise(bataille);
 		}
-		return c instanceof Botte;
+		return carte instanceof Botte;
 	}
 	
 	public boolean estPrioritaire() {

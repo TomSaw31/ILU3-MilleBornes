@@ -3,7 +3,6 @@ package jeu;
 import cartes.Attaque;
 import cartes.Carte;
 import cartes.DebutLimite;
-import cartes.Limite;
 
 public class Coup {
 	private Joueur joueurCourant;

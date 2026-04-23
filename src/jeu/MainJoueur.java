@@ -1,14 +1,14 @@
 package jeu;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import cartes.Carte;
 
 public class MainJoueur implements Iterable<Carte>{
-	private List<Carte> listeCartes = new ArrayList<>();
+	private List<Carte> listeCartes = new LinkedList<>();
 	
 	public void prendre(Carte carte) {
 		listeCartes.add(carte);
