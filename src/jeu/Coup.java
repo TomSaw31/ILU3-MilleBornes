@@ -4,7 +4,7 @@ import cartes.Attaque;
 import cartes.Carte;
 import cartes.DebutLimite;
 
-public class Coup {
+public class Coup implements Comparable<Coup>{
 	private Joueur joueurCourant;
 	private Carte carte;
 	private Joueur joueurCible;
@@ -71,5 +71,23 @@ public class Coup {
 		}
 		return "depose la carte " + carte.toString() + " dans la zone de jeu de " + joueurCible.getNom() + ".";
 
+	}
+	
+	@Override
+	public int compareTo(Coup coup) {
+		Joueur cibleDuCoup = coup.getJoueurCible();
+		if (joueurCourant.equals(this.joueurCible) && joueurCourant.equals(cibleDuCoup)) {
+			return 0;
+		}
+		if (joueurCible == null && cibleDuCoup == null) {
+			return 0;
+		}
+		if (joueurCourant.equals(joueurCible)) {
+			return 1;
+		}
+		if (joueurCourant.equals(cibleDuCoup)) {
+			return -1;
+		}
+		return joueurCible.compareTo(cibleDuCoup);
 	}
 }

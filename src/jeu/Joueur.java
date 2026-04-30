@@ -2,17 +2,21 @@ package jeu;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import cartes.Bataille;
 import cartes.Botte;
 import cartes.Carte;
+import strategies.Strategie;
 
-public class Joueur {
+public class Joueur implements Comparable<Joueur>{
 	private String nom;
 	private MainJoueur main = new MainJoueur();
 	private ZoneDeJeu zoneDeJeu;
-	private Random random = new Random(0);
+	//private Random random = new Random(0);
+	private Strategie strategie = new Strategie() {};
 
 	public Joueur(String nom, ZoneDeJeu zoneDeJeu) {
 		this.nom = nom;
@@ -32,6 +36,15 @@ public class Joueur {
 		return 31 * nom.hashCode();
 	}
 	
+	@Override
+	public int compareTo(Joueur joueurToCompare) {
+		int diffKm = donnerKmParcourus() - joueurToCompare.donnerKmParcourus();
+		if (diffKm == 0) {
+			return nom.compareTo(joueurToCompare.getNom());
+		}
+		return diffKm;
+	}
+	
 	public String getNom() {
 		return nom;
 	}
@@ -47,6 +60,10 @@ public class Joueur {
 	
 	public ZoneDeJeu getZoneDeJeu() {
 		return zoneDeJeu;
+	}
+	
+	public Strategie getStrategie() {
+		return strategie;
 	}
 	
 	public void donner(Carte carte) {
@@ -103,16 +120,16 @@ public class Joueur {
 	public Coup choisirCoup(Set<Joueur> participants) {
 		Set<Coup> coups = coupsPossibles(participants);
 		if (coups.isEmpty()) {
-			return choisirCoupAleatoire(coupsDefausse());
+			return strategie.selectionnerDefausse(coupsDefausse());
 		}
-		return choisirCoupAleatoire(coups);
+		return strategie.selectionnerCoup(coups);
 	}
 	
-	private Coup choisirCoupAleatoire(Set<Coup> coups) {
-		Coup[] coupsTab = coups.toArray(new Coup[coups.size()]);
-		int index = random.nextInt(coups.size());
-		return coupsTab[index];
-	}
+//	private Coup choisirCoupAleatoire(Set<Coup> coups) {
+//		Coup[] coupsTab = coups.toArray(new Coup[coups.size()]);
+//		int index = random.nextInt(coups.size());
+//		return coupsTab[index];
+//	}
 	
 	public String afficherEtatJoueur() {
 		StringBuilder chaine = new StringBuilder("Joueur : " + nom);
@@ -142,5 +159,17 @@ public class Joueur {
 		}
 		chaine.append("\n");
 		return chaine.toString();
+	}
+	
+	public Carte donnerSommetPile() {
+		List<Bataille> pileBataille = zoneDeJeu.getPileBataille();
+		if (pileBataille.isEmpty()) {
+			return null;
+		}
+		return pileBataille.getFirst();
+	}
+	
+	public Set<Botte> donnerBottes() {
+		return zoneDeJeu.getBottes();
 	}
 }

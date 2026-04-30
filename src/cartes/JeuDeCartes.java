@@ -1,61 +1,59 @@
 package cartes;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class JeuDeCartes {
-	private Configuration[] typesDeCartes = new Configuration[] {
-			 // Bornes
-            new Configuration(new Borne(25), 10),
-            new Configuration(new Borne(50), 10),
-            new Configuration(new Borne(75), 10),
-            new Configuration(new Borne(100), 12),
-            new Configuration(new Borne(200), 4),
-
-            // Parades
-            new Configuration(new Parade(Type.FEU), 14),
-            new Configuration(new FinLimite(), 6),
-            new Configuration(new Parade(Type.ESSENCE), 6),
-            new Configuration(new Parade(Type.CREVAISON), 6),
-            new Configuration(new Parade(Type.ACCIDENT), 6),
-
-            // Attaques
-            new Configuration(new Attaque(Type.FEU), 5),
-            new Configuration(new DebutLimite(), 4),
-            new Configuration(new Attaque(Type.ESSENCE), 3),
-            new Configuration(new Attaque(Type.CREVAISON), 3),
-            new Configuration(new Attaque(Type.ACCIDENT), 3),
-
-            // Bottes
-            new Configuration(new Botte(Type.FEU), 1),
-            new Configuration(new Botte(Type.ESSENCE), 1),
-            new Configuration(new Botte(Type.CREVAISON), 1),
-            new Configuration(new Botte(Type.ACCIDENT), 1)
-    };
+	private Map<Carte, Integer> typesDeCartes = new HashMap<>();
+	public JeuDeCartes() {
+		typesDeCartes.put(new Borne(25), 10);
+		typesDeCartes.put(new Borne(50), 10);
+		typesDeCartes.put(new Borne(75), 10);
+		typesDeCartes.put(new Borne(100), 12);
+		typesDeCartes.put(new Borne(200), 4);
+		
+		typesDeCartes.put(new Parade(Type.FEU), 14);
+		typesDeCartes.put(new Parade(Type.ESSENCE), 6);
+		typesDeCartes.put(new Parade(Type.CREVAISON), 6);
+		typesDeCartes.put(new Parade(Type.ACCIDENT), 6);
+		
+		typesDeCartes.put(new Attaque(Type.FEU), 5);
+		typesDeCartes.put(new Attaque(Type.ESSENCE), 3);
+		typesDeCartes.put(new Attaque(Type.CREVAISON), 3);
+		typesDeCartes.put(new Attaque(Type.ACCIDENT), 3);
+		
+		typesDeCartes.put(new Botte(Type.FEU), 1);
+		typesDeCartes.put(new Botte(Type.ESSENCE), 1);
+		typesDeCartes.put(new Botte(Type.CREVAISON), 1);
+		typesDeCartes.put(new Botte(Type.ACCIDENT), 1);
+		
+		typesDeCartes.put(new DebutLimite(), 4);
+		typesDeCartes.put(new FinLimite(), 6);
+	}	
+	
 	
 	public Carte[] donnerCartes() {
-		int taille = 0;
-		for (Configuration typeDeCarte : typesDeCartes) {
-			taille += typeDeCarte.getNbExemplaires();
-		}
-		
-		Carte[] cartes = new Carte[taille];
-		
-		int index = 0;
-		for (Configuration typeDeCarte : typesDeCartes) {
-			int tailleType = typeDeCarte.getNbExemplaires();
-			for(int i = 0; i < tailleType; i++) {
-				cartes[index] = typeDeCarte.getCarte();
-				index++;
+		Carte[] cartes = new Carte[106];
+		int carteIndex = 0;
+		for (Map.Entry<Carte, Integer> typeDeCarte : typesDeCartes.entrySet()) {
+			Carte key = typeDeCarte.getKey();
+			Integer valeur = typeDeCarte.getValue();
+			
+			for (int i = 0; i < valeur; i++) {
+				cartes[carteIndex++] = key;
 			}
 		}
+		
 		return cartes;
 	}
 	
 	
 	public String affichageJeuDeCartes() {
 		StringBuilder chaine = new StringBuilder();
-		for (Configuration typeDeCarte : typesDeCartes) {
-			chaine.append(typeDeCarte.getNbExemplaires());
+		for (Map.Entry<Carte, Integer> typeDeCarte : typesDeCartes.entrySet()) {
+			chaine.append(typeDeCarte.getValue());
 			chaine.append(" ");
-			chaine.append(typeDeCarte.getCarte());
+			chaine.append(typeDeCarte.getKey());
 			chaine.append("\n");
 		}
 		return chaine.toString();
@@ -64,8 +62,8 @@ public class JeuDeCartes {
 	public boolean checkCount() {
         Carte[] cartes = donnerCartes();
         
-        for (Configuration configuration : typesDeCartes) {
-            if (!checkConfiguration(configuration, cartes)){
+        for (Map.Entry<Carte,Integer> typeDeCarte : typesDeCartes.entrySet()) {
+            if (!checkConfiguration(typeDeCarte, cartes)){
                 return false;
             }
         }
@@ -73,32 +71,32 @@ public class JeuDeCartes {
         return true;
     }
     
-    private boolean checkConfiguration(Configuration configuration, Carte[] cartes) {
+    private boolean checkConfiguration(Map.Entry<Carte,Integer> typeDeCarte, Carte[] cartes) {
         int nbTrouvees = 0;
         
         for (int i = 0; i < cartes.length; i++) {
-            if (cartes[i].equals(configuration.getCarte())) {
+            if (cartes[i].equals(typeDeCarte.getKey())) {
                 nbTrouvees++;
             }
         }
-        return nbTrouvees == configuration.getNbExemplaires();
+        return nbTrouvees == typeDeCarte.getValue();
     }
 	
-	private static class Configuration {
-		private int nbExemplaires;
-		private Carte carte;
-		
-		private Configuration(Carte carte, int nbExemplaires) {
-			this.carte = carte;
-			this.nbExemplaires = nbExemplaires;
-		}
-		
-		public Carte getCarte() {
-			return carte;
-		}
-		
-		public int getNbExemplaires() {
-			return nbExemplaires;
-		}
-	}
+//	private static class Configuration {
+//		private int nbExemplaires;
+//		private Carte carte;
+//		
+//		private Configuration(Carte carte, int nbExemplaires) {
+//			this.carte = carte;
+//			this.nbExemplaires = nbExemplaires;
+//		}
+//		
+//		public Carte getCarte() {
+//			return carte;
+//		}
+//		
+//		public int getNbExemplaires() {
+//			return nbExemplaires;
+//		}
+//	}
 }
